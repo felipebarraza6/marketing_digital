@@ -30,7 +30,9 @@ class User(ModelApi, AbstractUser):
 
     dni = models.CharField(max_length=15)
 
-    type_user = models.CharField(max_length=3, choices=PROFILES, default='ATT')
+    type_user = models.CharField(max_length=3, choices=PROFILES, default='CL')
+
+    branch_office_default = models.ForeignKey('marketing.BranchOffice', on_delete=models.CASCADE, blank=True, null=True)
 
     is_verified = models.BooleanField(
         default = True,

@@ -41,6 +41,7 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     'api.users',
+    'api.marketing',
 ]
 
 THIRD_APPS = [
