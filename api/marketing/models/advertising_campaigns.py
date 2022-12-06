@@ -11,6 +11,7 @@ class AdvertisingCampaign(ModelApi):
     scope = models.IntegerField()
     interactions = models.IntegerField()
     result = models.IntegerField()
+    frequency = models.FloatField()
     job_applitacion = models.ForeignKey(JobApplitacion, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=False)
 
