@@ -29,9 +29,14 @@ class SignupModelSerializer(serializers.Serializer):
     )
     
     type_user = serializers.CharField()
+    name_enterprise = serializers.CharField(required=False)
 
     password = serializers.CharField(min_length=8, max_length=64)
     password_confirmation = serializers.CharField(min_length=8, max_length=64)
+
+    def get_validation_exclusions(self):
+        exclusions = super(SignupModelSerializer, self).get_validation_exclusions()
+        return exclusions + ['name_enterprise']
 
     def validate(self, data):
         passwd = data['password']
@@ -45,7 +50,11 @@ class SignupModelSerializer(serializers.Serializer):
     def create(self, data):
         data.pop('password_confirmation')
         user = User.objects.create_user(**data, is_active=True)
-        print(user)
+
+        if(data['type_user']=='CL'):
+            if(data['name_enterprise'] is None):
+                raise serializers.ValidationError('Debes ingresar el nombre de la empresa en caso que sea un cliente!')
+            ClientProfile(user=user, name_enterprise=data['name_enterprise'])
         return user
 
 
