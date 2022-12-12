@@ -23,6 +23,8 @@ class User(ModelApi, AbstractUser):
 
     phone_number = models.CharField(max_length=500, blank=True, null=True)
 
+    name_enterprise = models.CharField(max_length=500, blank=True, null=True)
+
     PROFILES = [
         ('ADM', 'administrator'),
         ('CL', 'cliente')

@@ -23,6 +23,7 @@ from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/users/', include(('api.users.router', 'users'), namespace='users')),
+    path('', include(('api.users.router', 'users'), namespace='users')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
