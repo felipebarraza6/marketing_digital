@@ -1,6 +1,6 @@
 from django.db import models
 from api.utils.models import ModelApi
-from .branch_offices import BranchOffice
+from .branch_officces import BranchOffice
 
 import uuid
 

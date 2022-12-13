@@ -1,10 +1,7 @@
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework.decorators import action
-from rest_framework import status
 from rest_framework import mixins, viewsets, status
-from rest_framework import generics
 from django_filters import rest_framework as filters
 from api.users.models import User
 from api.users.serializers import UserModelRetrieveSerializer, UserLoginSerializer, SignupModelSerializer, UserModelSerializer
@@ -27,16 +24,17 @@ class UserViewSet(mixins.RetrieveModelMixin,
             permissions = [IsAuthenticated]
         return [p() for p in permissions]
 
-    filter_backends = (filters.DjangoFilterBackend,)
-    queryset = User.objects.all()
-    serializer_class = UserModelSerializer
-    lookup_field = 'username'
-
     def get_serializer_class(self):
         if self.action == 'retrieve' or self.action == 'list':
             return UserModelRetrieveSerializer       
         return UserModelSerializer
 
+
+    filter_backends = (filters.DjangoFilterBackend,)
+    queryset = User.objects.all()
+    lookup_field = 'username'
+
+    
     
     @action(detail=False, methods=['post'])
     def signup(self, request):
@@ -49,7 +47,6 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
     @action(detail=False, methods=['post'])
     def login(self, request):
-        """User sign in."""
         serializer = UserLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user, token = serializer.save()
