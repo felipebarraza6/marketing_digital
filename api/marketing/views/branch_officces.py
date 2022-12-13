@@ -1,6 +1,4 @@
 
-from rest_framework.response import Response
-from rest_framework.decorators import action
 from rest_framework import mixins, viewsets, status
 from django_filters import rest_framework as filters
 from api.users.models import User
