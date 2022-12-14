@@ -3,6 +3,14 @@ import { Typography, Row, Col,
           Form, Input, Button, Table } from 'antd'
 
 const Users = () => {
+ const data = [
+    { 
+      nombre: "Karen",
+      apellido: "Escalante",
+      empresa: "Cocotero",
+    },
+    
+  ]
   return(
     <div>
       <Row>
@@ -10,7 +18,12 @@ const Users = () => {
           <Typography.Title>Usuarios</Typography.Title>
         </Col>
         <Col span={12}>
-          <Table />
+          <Table dataSource={data} columns={[
+            { dataIndex:'nombre', title:'Nombre' },
+            { dataIndex:'apellido', title:'Apellido' },
+            { dataIndex:'empresa', title:'Empresa' },
+
+          ]} />
         </Col>
         <Col span={12} style={{paddingLeft:'40px'}}>
           <Form layout='vertical'>

@@ -27,6 +27,21 @@ const Clients = () => {
     })
 
   }
+const data = [
+    { 
+      nombre: "David",
+      apellido: "Urbina",
+      empresa: "Arepinga",
+      dni: "26478839-0",
+    },
+    { 
+      nombre: "Luis",
+      apellido: "Mejitas",
+      empresa: "Outlet de las Marcas",
+      dni: "26854963-9",
+    },
+  ]
+
 
   const getClients = async() => {
     const rq = await endpoints.clients.list().then((x)=> {
@@ -39,7 +54,6 @@ const Clients = () => {
   }, [])
 
 
-
   return(
     <div>
       <Row>
@@ -47,7 +61,12 @@ const Clients = () => {
           <Typography.Title>Clientes</Typography.Title>
         </Col>
         <Col span={12}>
-          <Table />
+          <Table dataSource={data} columns={[
+            { dataIndex:'nombre', title:'Nombre' },
+            { dataIndex:'apellido', title:'Apellido' },
+            { dataIndex:'empresa', title:'Empresa' },
+            { dataIndex:'dni', title:'Rut' },
+          ]} />
         </Col>
         <Col span={12} style={{paddingLeft:'40px'}}>
           <Form onFinish={onFinish} layout='vertical' form={form}>

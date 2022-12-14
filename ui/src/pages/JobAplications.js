@@ -12,8 +12,27 @@ const JobAplications = () => {
       owner_client: 1
     }
     console.log(values)
-
   }
+
+  const data = [
+    { 
+      admin: "Karen",
+      "sucursal": "Cocotero",
+      "cliente": "David",
+      "descripcion": "Campaña realiza para incrementar ventas 24 de diciembre, idealmente durabilidad de una semana",
+      "presupuesto": "$10.000",
+      "estado":"rechazada"
+    },
+    { 
+      "admin": "Karen",
+      "sucursal": "Cocotero",
+      "cliente": "Luis",
+      "descripcion": "Campaña realiza para incrementar ventas de ropa el 24 de diciembre",
+      "presupuesto": "$10.000",
+      "estado":"aprobada"
+    }
+
+  ]
 
   return(
     <div>
@@ -21,10 +40,17 @@ const JobAplications = () => {
         <Col span={24}>
           <Typography.Title>Solicitudes</Typography.Title>
         </Col>
-        <Col span={12}>
-          <Table />
+        <Col span={16}>
+          <Table dataSource={data} columns={[
+            { dataIndex:'admin', title:'Administrador' },
+            { dataIndex:'sucursal', title:'Sucursal' },
+            { dataIndex:'cliente', title:'Cliente' },
+            { dataIndex:'descripcion', title:'Descripcion' },
+            { dataIndex:'presupuesto', title:'Presupuesto' },
+            { title:'Estado', dataIndex:'estado' }
+          ]} />
         </Col>
-        <Col span={12} style={{paddingLeft:'40px'}}>
+        <Col span={8} style={{paddingLeft:'40px'}}>
           <Form onFinish={onSend} form={form} layout='vertical'>
             <Form.Item label='Titulo' name='title'>
               <Input />
