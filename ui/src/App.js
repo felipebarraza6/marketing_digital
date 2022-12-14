@@ -31,7 +31,7 @@ function App() {
         dispatch({
           type: 'LOGIN',
           payload: {
-            token: token,
+            access_token: token,
             user: user,
           }
         })

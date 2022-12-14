@@ -13,7 +13,6 @@ const Login = () => {
 
 
   const authProcess = async(values) => {
-    console.log(values)
     try {
             const request = await endpoints.authenticated(values)      
             dispatch({
