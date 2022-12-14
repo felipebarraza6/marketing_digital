@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Row, Button,Col, Table, Modal, Statistic, Card } from 'antd'
+import { Typography, Row, Button,Col, Table, Modal, Statistic, Card, Tag } from 'antd'
 import { LoadingOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import { Area, Line } from '@ant-design/plots'
 
@@ -36,6 +36,7 @@ const Campaigns = () => {
             { dataIndex: 'cliente', title: 'Cliente' },
             { dataIndex: 'uuid', title: 'UUID' },
             { title:'Estado', render: ()=> <><LoadingOutlined style={{color:'blue', fontSize:'17px', marginRight:'10px'}}/> Campaña Activa</> },
+            { title:'Alerta', render: ()=> <Tag color='volcano'>Debes revisar está campaña...</Tag> },
             { render: (x)=>  <Button type='primary' onClick={()=> Modal.info({
               title: x.uuid,
               width: '900px',
