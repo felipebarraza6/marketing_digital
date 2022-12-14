@@ -34,7 +34,14 @@ class UserViewSet(mixins.RetrieveModelMixin,
     queryset = User.objects.all()
     lookup_field = 'username'
 
-    
+    class UserFilter(filters.FilterSet):
+        class Meta:
+            model = User
+            fields = {
+                'type_user': ['exact'],
+                }
+
+    filterset_class = UserFilter    
     
     @action(detail=False, methods=['post'])
     def signup(self, request):

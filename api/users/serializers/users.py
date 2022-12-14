@@ -20,7 +20,7 @@ class UserModelSerializer(serializers.ModelSerializer):
 class BranchOfficeModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = BranchOffice
-        fields = ('name_branch', 'commercial_business', 'dni_branch')
+        fields = ('id', 'owner', 'name_branch', 'commercial_business', 'dni_branch')
 
 class UserModelRetrieveSerializer(serializers.ModelSerializer):
     
