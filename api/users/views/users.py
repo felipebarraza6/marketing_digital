@@ -21,7 +21,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
         if self.action == 'login' or self.action == 'signup':
             permissions = [AllowAny]
         else:
-            permissions = [IsAuthenticated]
+            permissions = [AllowAny]
         return [p() for p in permissions]
 
     def get_serializer_class(self):

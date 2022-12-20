@@ -22,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=i-180ubli+i73-g2-6hlf1sfbu5@4(=((b%odj@s1!a!fp)7h'
+SECRET_KEY = ')_!dq(*h#v1a(ya^2(z%0bn_hkr&t!4gq2_t%l9)v-xj678q7j'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -53,15 +54,15 @@ LOCAL_APPS = [
 ]
 
 THIRD_APPS = [
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
     'django_filters'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_APPS
 
-MIDDLEWARE = [    
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,10 +77,9 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'http://localhost:8000',
-    'http://localhost:3001',
-    'http://localhost:*'
+    'http://192.168.0.2:3000',
+    'http://192.168.0.2:8000',
+    'http://192.168.0.2:5000',
 ]
 
 ROOT_URLCONF = 'api.urls'
@@ -87,23 +87,15 @@ ROOT_URLCONF = 'api.urls'
 REST_FRAMEWORK = {
     'DEAFULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-        'drf_excel.renderers.XLSXRenderer'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.permissions.AllowAny',
         'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-
     ),
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend'
+     'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    )
+    'PAGE_SIZE': 120,
 }
 
 TEMPLATES = [

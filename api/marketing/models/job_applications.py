@@ -12,11 +12,16 @@ class JobApplitacion(ModelApi):
     start_date = models.DateField()
     end_data = models.DateField()
     owner_client = models.ForeignKey('users.User', related_name='owner_client_user', on_delete=models.CASCADE)
-    owner_adm = models.ForeignKey('users.User', related_name='owner_adm_user',on_delete=models.CASCADE)
+    owner_adm = models.ForeignKey('users.User', related_name='owner_adm_user',on_delete=models.CASCADE, blank=True, null=True)
     report_adm = models.TextField(max_length=1200, null=True, blank=True)
     branch_office = models.ForeignKey(BranchOffice, on_delete=models.CASCADE)
+    image_grafic = models.ImageField(blank=True, null=True)
+    payment = models.FileField(blank=True, null=True)
+    is_confirmgrafic = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_answer = models.BooleanField(default=False)
+    is_answer_grafic = models.BooleanField(default=False)
+    note_client = models.TextField(max_length=1200, blank=True, null=True)
 
 
 

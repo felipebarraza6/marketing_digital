@@ -16,7 +16,7 @@ const createClient = async(data) => {
 }
 
 const listClients = async() => {
-  const request = await GET(`users?type_user=CL`)
+  const request = await GET(`users`)
   return request
 }
 

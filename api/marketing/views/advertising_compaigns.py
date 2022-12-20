@@ -26,5 +26,14 @@ class AdvertisingCampaignViewSet(mixins.RetrieveModelMixin,
         return AdvertisingCampaignModelSerializer
 
     filter_backends = (filters.DjangoFilterBackend,)
+    class AdvertisingCampaignFilter(filters.FilterSet):
+        class Meta:
+            model = AdvertisingCampaign
+            fields = {
+                'job_applitacion': ['exact'],
+                'job_applitacion__owner_client': ['exact']
+                }
+
+    filterset_class = AdvertisingCampaignFilter
     queryset = AdvertisingCampaign.objects.all()
     lookup_field = 'uuid'
