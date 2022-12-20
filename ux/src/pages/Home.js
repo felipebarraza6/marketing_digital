@@ -25,10 +25,11 @@ const Home = () => {
 
   return(<Layout>
       <BrowserRouter>
-      <Header>
+      <Header style={{backgroundColor:user.type_user == 'CL' && '#468FF2'}}>
         <Menu theme='dark' mode={'horizontal'} style={{flex: 'auto',
             marginLeft: '75%',
-            order: 2
+            order: 2,
+            backgroundColor:user.type_user == 'CL' && '#468FF2'
         }}>
 
           <Menu.Item>
@@ -40,7 +41,7 @@ const Home = () => {
         </Menu>
           </Header>
         <Layout>
-        <Sider width={220} style={{padding:'20px', paddingBottom: '30%', paddingTop:'0px'}}>
+        <Sider width={220} style={{padding:'20px', paddingBottom: '30%', paddingTop:'0px', backgroundColor:user.type_user == 'CL' && '#468FF2'}}>
           <Typography.Title level={2} style={{textAlign: 'center', color:'white'}}>Marketing App</Typography.Title>
           <Menu style={{borderRadius:'10px', marginTop:'100px'}}>
             {state.user.type_user === 'ADM' && <>

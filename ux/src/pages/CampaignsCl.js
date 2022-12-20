@@ -42,9 +42,6 @@ const CampaignsCl = () => {
     <div>
       <Row>
         <Col span={24}>
-          <Typography.Title>Campañas</Typography.Title>
-        </Col>
-        <Col span={24}>
           <Table dataSource={data} columns={[
             { dataIndex: 'job_applitacion', title: 'Cliente', render:(x)=>x.owner_client.name_enterprise},
             { dataIndex:'is_active', title:'Estado', render: (x)=> <>
