@@ -30,7 +30,7 @@ class JobApplitacionModelSerializer(serializers.ModelSerializer):
         instance.is_answer_grafic = validated_data.get('is_answer_grafic', instance.is_answer_grafic)
         instance.note_client = validated_data.get('note_client', instance.note_client)
         
-        if instance.is_confirmgrafic == True:
+        if instance.is_confirmgrafic and instance.is_answer_grafic == True:
             AdvertisingCampaign.objects.create(job_applitacion=instance)
 
         instance.save()
