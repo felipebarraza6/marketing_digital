@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Typography, Row, Button,Col, Table, Modal, Statistic, Card, Tag } from 'antd'
+import { Typography, Row, Button,Col, Table, Modal, Statistic, Card, Tag, Input } from 'antd'
 import { LoadingOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import { Area, Line } from '@ant-design/plots'
 import endpoints from '../api/endpoints'
@@ -8,6 +8,7 @@ const CampaignsCl = () => {
   
 
   const [data, setData] = useState(null)
+  const [update, setUpdate] = useState(0)
 
   const getCampaigns = async()=> {
     const rq = await endpoints.advertising_campaignscl.list().then((x)=>{
@@ -18,77 +19,89 @@ const CampaignsCl = () => {
 
   useEffect(()=>{
     getCampaigns()
-  },[])
+  },[update])
   
 
-  const config = {
-            data: [
-                {timePeriod: '1 de nov', m3:0},
-                {timePeriod: '4 de nov', m3:0},
-                {timePeriod: '7 de nov', m3:0},
-                {timePeriod: '10 de nov', m3:0},
-                {timePeriod: '13 de nov', m3:8230},
-                {timePeriod: '16 de nov', m3:6212},
-                {timePeriod: '19 de nov', m3:0},
-                {timePeriod: '22 de nov', m3:0},
-                {timePeriod: '28 de nov', m3:0},
-            ],
-            xField: 'timePeriod',
-            yField: 'm3',            
-            
-          }
-
+  
   return(
     <div>
       <Row>
         <Col span={24}>
           <Table dataSource={data} columns={[
-            { dataIndex: 'job_applitacion', title: 'Cliente', render:(x)=>x.owner_client.name_enterprise},
+            { dataIndex: 'job_applitacion', title: 'Nombre campaña', render:(x)=>x.title},
             { dataIndex:'is_active', title:'Estado', render: (x)=> <>
               {x ?<> 
               <LoadingOutlined style={{color:'blue', fontSize:'17px', marginRight:'10px'}}/> Campaña Activa</>:<>
-                <Button type='primary'>Activar campaña</Button>
+                <Tag color='volcano'>Campaña inactiva</Tag>
                 </>}
               </> },
-            { title:'Alerta', render: ()=> <Tag color='volcano'>Debes revisar está campaña...</Tag> },
+            { title:'Alerta', render: (x)=> <>{x.is_active ? <Tag color='volcano'>
+              {x.result > 300 ? 'Debes revisar está campaña...':<></>}</Tag>
+
+              :<Tag color="volcano"></Tag>
+              }</>},
+             { 
+               title:'Funciones', 
+               render: (x)=> <>{x.is_active && <Button danger type='primary' onClick={async()=>{
+                  const rq = await endpoints.advertising_campaignsadm.update('is_active', false, x.uuid).then((x)=>{
+                    setUpdate(update+1)
+                  })
+                
+                }}  >PAUSAR CAMPAÑA</Button>}</>
+
+             },
+           , 
             { render: (x)=>  <Button type='primary' onClick={()=> Modal.info({
+              style:{top:'0px'},
               title: x.uuid,
-              width: '900px',
+              width: '100%',
               content: <Row>
                 <Col span={8} style={{padding:'10px'}}>
-                  <Card hoverable>
+                  <Card hoverable style={{border:'3px solid #007ef1'}}>
                     <Statistic
                       title="Alcance"
-                      value={x.alcance}
-                      precision={3}
+                      value={x.scope}
                     />
                   </Card>
                 </Col>
                 <Col span={8} style={{padding:'10px'}} >
-                  <Card hoverable>
+                  <Card hoverable style={{border:'3px solid #01ebe3'}} >
                     <Statistic
                       title="Costo por resultado"
-                      value={x.resultado}
+                      value={`$ ${x.result}`}
                       precision={0}
                     />
                   </Card>
 
                 </Col>
                 <Col span={8} style={{padding:'10px'}} >
-                  <Card hoverable>
+                  <Card hoverable style={{border:'3px solid #890ff5'}} >
                     <Statistic
                       title="Importe gastado"
-                      value={x.importe}
+                      value={`$ ${x.amount}`}
                       precision={0}
                     />
                   </Card>
 
                 </Col>
-                <Col span={24}>
-                  <Area {...config} />
+                <Col span={18}>
+                  <Card hoverable  style={{border:'3px solid #02042c'}} >
+                    <img src={x.img_chart} width={'100%'} />
+                  </Card>
+                </Col>
+                <Col span={6} style={{padding:'20px'}}>
+                  <Typography.Paragraph>NOTA ADMINISTRADOR: <br/><b>{x.message_admin}</b></Typography.Paragraph>
+                  <Typography.Paragraph>TU ÚLTIMO COMENTARIO: <br/><b>{x.message_client}</b></Typography.Paragraph>
+                  <Input.TextArea placeholder='Envía un comentario...' rows={5} onChange={async(x)=>{
+                  const rq = await endpoints.advertising_campaignsadm.update('message_client', x.target.value, x.uuid).then((x)=>{
+                    setUpdate(update+1)
+                  })
+                
+                }} />
                 </Col>
               </Row>
             })}>VER CAMPAÑA </Button>},
+,
 
           ]} />
         </Col>

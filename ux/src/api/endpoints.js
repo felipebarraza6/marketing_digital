@@ -44,6 +44,11 @@ const listCampaignAdm = async() => {
   return request
 }
 
+const retrieveCampaignAdm = async(uuid) => {
+  const request = await GET(`advertising_campaigns/${uuid}/`)
+  return request
+}
+
 const listCampaignCl = async() => {
 
   const user = JSON.parse(localStorage.getItem('user') || null)
@@ -98,6 +103,25 @@ const createJobApplication = async(data) => {
 
 }
 
+const UpdateAdvertisingCampaign = async(field, value, uuid) => {      
+
+  const token = JSON.parse(localStorage.getItem('token') || null)
+  const options = {
+    headers: {        
+        'content-type': 'multipart/form-data',
+        Authorization: `Token ${token}`
+    }
+  }  
+
+  let formdata = new FormData()
+  formdata.append(field, value)  
+  const rq = await INSTANCE.patch(`advertising_campaigns/${uuid}/`, formdata, options).then((response) => {
+  })
+  return rq 
+
+}
+
+
 const endpoints = {
     authenticated: login,
     admins: {
@@ -116,10 +140,14 @@ const endpoints = {
         list: listJobApplicationsForClient
     },
     advertising_campaignsadm:{
-      list: listCampaignAdm
+      list: listCampaignAdm,
+      update: UpdateAdvertisingCampaign,
+      retrieve: retrieveCampaignAdm
     },
     advertising_campaignscl:{
-      list: listCampaignCl
+      list: listCampaignCl,
+      update: UpdateAdvertisingCampaign,
+      retrieve: retrieveCampaignAdm
     }
 }
 

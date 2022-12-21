@@ -46,7 +46,7 @@ const Home = () => {
           <Menu style={{borderRadius:'10px', marginTop:'100px'}}>
             {state.user.type_user === 'ADM' && <>
               {state.user.type_user=='ADM'&&<Menu.Item icon={<UnorderedListOutlined />}>
-                <Link to='/solicitudes-adm'>Solicitudes</Link>
+                <Link to='/'>Solicitudes</Link>
               </Menu.Item>}
               {state.user.type_user=='ADM'&&<Menu.Item icon={<NotificationOutlined/>}>
                   <Link to='/campanias'>Campañas</Link>
@@ -63,7 +63,7 @@ const Home = () => {
                 <Link to='/crear-solicitud'>Crear solicitud</Link>
               </Menu.Item>}
               {state.user.type_user=='CL'&&<Menu.Item icon={<UnorderedListOutlined />}>
-                <Link to='/solicitudes-cl'>Mis Solicitudes</Link>
+                <Link to='/'>Mis Solicitudes</Link>
               </Menu.Item>}
               {state.user.type_user=='CL'&&<Menu.Item icon={<NotificationOutlined/>}>
                   <Link to='/mis-campanias'>Mis Campañas</Link>
@@ -80,10 +80,9 @@ const Home = () => {
             }}
           ><div style={{ padding: '20px', minHeight: '1360' }} >
             <Routes>
-              <Route exact path='/' element={<HomeNav />} />
-              <Route exact path='/solicitudes-adm' element={<JobAplicationsadm />} />
+              <Route exact path= {state.user.type_user == 'ADM' ? '/' : '/solicitudes-adm'} element={<JobAplicationsadm />} />
               <Route exact path='/crear-solicitud' element={<CreateJobApplication />} />
-              <Route exact path='/solicitudes-cl' element={<JobAplicationscl />} />
+              <Route exact path={state.user.type_user == 'CL' ? '/' : '/solicitudes-cl'}  element={<JobAplicationscl />} />
               <Route exact path='/campanias' element={<CampaignsAdm />} />
               <Route exact path='/mis-campanias' element={<CampaignsCl />} />
               <Route exact path='/clientes' element={<Clients />} />
