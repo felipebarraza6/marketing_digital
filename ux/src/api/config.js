@@ -43,3 +43,18 @@ export const POST = async (endpoint, data) =>{
     return response
 }
 
+export const DELETE = async (endpoint) =>{
+
+    const token = JSON.parse(localStorage.getItem('token') || null)
+
+    const options = {
+        headers: {
+            Authorization: `Token ${token}`
+        }
+    }
+
+    const response = INSTANCE.delete(endpoint, options)
+
+    return response
+}
+

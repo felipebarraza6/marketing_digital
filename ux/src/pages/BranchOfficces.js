@@ -6,7 +6,7 @@ import { Typography, Row, Col,
 import endpoints from '../api/endpoints'
 
 
-const Clients = () => {
+const BranchOfficces = () => {
   
   const [form] = Form.useForm()
   const [formu] = Form.useForm()
@@ -23,9 +23,10 @@ const Clients = () => {
       ...values,
       password_confirmation: values.password,
       type_user: 'CL',
-      branch_office_default: user.branch_office_default.id
+      branch_office_default: user.branch_office_default.id,
+      owner: user.id
     }
-    const rq = await endpoints.clients.create(values).then(()=> {
+    const rq = await endpoints.branch_offices.create(values).then(()=> {
       form.resetFields()
       setUpdate(update+1)
       notification.success({message:'CLIENTE CREADO CORRECTAMENTE'})
@@ -36,7 +37,7 @@ const Clients = () => {
   }
 
   const getClients = async() => {
-    const rq = await endpoints.clients.list().then((x)=> {
+    const rq = await endpoints.branch_offices.list().then((x)=> {
       setData(x.data.results)
     })
   }
@@ -51,47 +52,31 @@ const Clients = () => {
       <Row>
         <Col span={18}>
           <Table dataSource={data} columns={[
-            { dataIndex:'first_name', title:'Nombre' },
-            { dataIndex:'last_name', title:'Apellido' },
-            { dataIndex:'email', title:'Email' },
-            { dataIndex:'name_enterprise', title:'Empresa' },
-            { dataIndex:'dni', title:'Rut' },
-            { render: (x)=> <Button type='primary' danger onClick={async()=> {
-              const rq = endpoints.clients.delete(x.username).then((x)=> {
+            { dataIndex:'name_branch', title:'Nombre' },
+            { dataIndex:'dni_branch', title:'Rut' },
+            { dataIndex:'commercial_business', title:'Giro' },
+            { render: (x)=><Button danger type='primary' onClick={async()=> {
+              const rq = await endpoints.branch_offices.delete(x.id).then((x)=> {
                 setUpdate(update+1)
               })
-            }} >Eliminar</Button> }
+            }}>Eliminar</Button> }
           ]} />
         </Col>
         <Col span={6} style={{paddingLeft:'40px'}}>
           {viewForm &&
           <Form onFinish={onFinish} layout='vertical'  form={form}>
-            <Form.Item label='Nombre' name='first_name'>
+            <Form.Item label='Nombre' name='name_branch'>
               <Input />
             </Form.Item>
-            <Form.Item label='Apellido' name='last_name'>
+            <Form.Item label='Rut' name='dni_branch'>
               <Input />
             </Form.Item>
-            <Form.Item label='Usuario' name='username'>
-              <Input />
+            <Form.Item label='Giro' name='commercial_business'>
+              <Input.TextArea rows={4} />
             </Form.Item>
-
-            <Form.Item label='Email' name='email'>
-              <Input />
-            </Form.Item>
-            <Form.Item label='Nombre empresa' name='name_enterprise'>
-              <Input />
-            </Form.Item>
-            <Form.Item label='Rut' name='dni'>
-              <Input />
-            </Form.Item>
-            <Form.Item label='Contraseña' name='password'>
-              <Input />
-            </Form.Item>
-          <Form.Item>
+            <Form.Item>
             <Button type='primary' htmlType='submit'>CREAR</Button>
               <Button danger type='primary' style={{marginLeft:'10px'}} onClick={()=>form.resetFields()}>LIMPIAR</Button>
-            
           </Form.Item>
           </Form>}
         </Col>
@@ -101,4 +86,4 @@ const Clients = () => {
 }
 
 
-export default Clients 
+export default BranchOfficces 

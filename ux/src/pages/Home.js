@@ -4,16 +4,19 @@ import { Layout, Menu, Button,
 import { AppContext } from '../App'
 import { UnorderedListOutlined, NotificationOutlined, 
           UserOutlined, LogoutOutlined, UsergroupAddOutlined,
-          PlusSquareFilled } from '@ant-design/icons'
+          PlusSquareFilled, BuildOutlined } from '@ant-design/icons'
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom"
 import HomeNav from './HomeNav'
 import JobAplicationsadm from './JobAplicationsadm'
 import CampaignsAdm from './CampaignsAdm'
 import Clients from './Clients'
+import logo from '../assets/images/logo.png'
+import logo2 from '../assets/images/logo2.png'
 import Users from './Users'
 import CreateJobApplication from './CreateJobApplication'
 import JobAplicationscl from './JobApplicationscl'
 import CampaignsCl from './CampaignsCl'
+import BranchOfficces from './BranchOfficces'
 
 const { Header, Sider, Content } = Layout
 
@@ -42,8 +45,8 @@ const Home = () => {
           </Header>
         <Layout>
         <Sider width={220} style={{padding:'20px', paddingBottom: '30%', paddingTop:'0px', backgroundColor:user.type_user == 'CL' && '#468FF2'}}>
-          <Typography.Title level={2} style={{textAlign: 'center', color:'white'}}>Marketing App</Typography.Title>
-          <Menu style={{borderRadius:'10px', marginTop:'100px'}}>
+    {state.user.type_user === 'ADM' ?<img src={logo} width={'100%'} />: <img src={logo2} width={'100%'} />}
+          <Menu style={{borderRadius:'10px', marginTop:'50px'}}>
             {state.user.type_user === 'ADM' && <>
               {state.user.type_user=='ADM'&&<Menu.Item icon={<UnorderedListOutlined />}>
                 <Link to='/'>Solicitudes</Link>
@@ -51,6 +54,10 @@ const Home = () => {
               {state.user.type_user=='ADM'&&<Menu.Item icon={<NotificationOutlined/>}>
                   <Link to='/campanias'>Campañas</Link>
               </Menu.Item>}
+              {state.user.type_user=='ADM'&&<Menu.Item icon={<BuildOutlined />}>
+                  <Link to='/sucursales'>Sucursales</Link>
+              </Menu.Item>}
+
               {state.user.type_user=='ADM'&&<Menu.Item icon={<UsergroupAddOutlined/>}>
                   <Link to='/clientes'>Clientes</Link>
               </Menu.Item>}
@@ -87,6 +94,7 @@ const Home = () => {
               <Route exact path='/mis-campanias' element={<CampaignsCl />} />
               <Route exact path='/clientes' element={<Clients />} />
               <Route exact path='/usuarios' element={<Users />} />
+              <Route exact path='/sucursales' element={<BranchOfficces />} />
             </Routes>
     </div>
           </Content>

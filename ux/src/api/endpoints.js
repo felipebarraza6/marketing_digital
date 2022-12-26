@@ -1,4 +1,4 @@
-import { POST_LOGIN, GET, POST, INSTANCE  } from "./config"
+import { POST_LOGIN, GET, POST, DELETE, INSTANCE  } from "./config"
 import { notification } from 'antd'
 
 const login = async(data) =>{
@@ -121,6 +121,27 @@ const UpdateAdvertisingCampaign = async(field, value, uuid) => {
 
 }
 
+const listBranchs = async() => {
+
+  const request = await GET(`branch_officces/`)
+  return request
+}
+
+const newBranch = async(data) => {
+  const request = await POST(`branch_officces/`, data)
+  return request
+}
+
+const deleteBranch = async(id) => {
+  const request = await DELETE(`branch_officces/${id}/`)
+  return request
+}
+
+const deleteUser = async(id) => {
+  const rq = await DELETE(`users/${id}/`)
+  return rq
+}
+
 
 const endpoints = {
     authenticated: login,
@@ -129,7 +150,8 @@ const endpoints = {
     },
     clients: {
       create: createClient,
-      list: listClients
+      list: listClients,
+      delete: deleteUser
     },
     job_applicationsadm: {
         list: listJobApplications,
@@ -148,6 +170,11 @@ const endpoints = {
       list: listCampaignCl,
       update: UpdateAdvertisingCampaign,
       retrieve: retrieveCampaignAdm
+    },
+    branch_offices: {
+      list: listBranchs,
+      create: newBranch,
+      delete: deleteBranch
     }
 }
 

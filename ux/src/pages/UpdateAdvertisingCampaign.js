@@ -36,7 +36,7 @@ const UpdateAdvertisingCampaign = ({ advertising_campaign }) => {
   },[update])
 
   return(<>
-      <Modal style={{top:'20px'}} footer={[<Button type="primary" onClick={()=> setVisible(false)}>Voler</Button>]}  width={'100%'} title={advertising_campaign.uuid} onCancel={()=>setVisible(false)} visible={visible} onOk={()=>console.log(data)}>
+      <Modal style={{top:'20px'}} footer={[<Button type="primary" onClick={()=> setVisible(false)}>Volver</Button>]}  width={'100%'} title={advertising_campaign.uuid} onCancel={()=>setVisible(false)} visible={visible} onOk={()=>console.log(data)}>
         <Row>
           <Col span={8}>
             <Card style={{margin:'5px', border:'1px solid black'}} hoverable>
@@ -60,16 +60,18 @@ const UpdateAdvertisingCampaign = ({ advertising_campaign }) => {
             </Card>
           </Col>
           <Col span={19}> 
-    <Tooltip placement="bottom" title='Haz click en la imágen para actualizar el reporte...' color='black'>
-            <Card style={{margin:'5px', border:'1px solid black'}} hoverable>
-    <Upload name="r1"  showUploadList={false} maxCount={1} 
+    <Tooltip placement="bottom" title='Haz click para actualizar el reporte...' color='black'>
+      <Upload name="r1"  showUploadList={false} maxCount={1} 
                             onChange={async(e)=> {
                               onChangeInput('img_chart', e.file.originFileObj)
                             }} > 
+            <Card style={{margin:'5px', height: !data.img_chart && '400px',width: !data.img_chart && '1000px', border:'1px solid black'}} hoverable>
+    
 
               <img src={data.img_chart} width={'100%'} />
-                        </Upload>
             </Card>
+        </Upload>
+
     </Tooltip>
           </Col>
           <Col span={5}>
