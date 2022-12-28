@@ -1,4 +1,4 @@
-import { POST_LOGIN, GET, POST, DELETE, INSTANCE  } from "./config"
+import { POST_LOGIN, GET, POST, DELETE, DOWNLOAD ,INSTANCE  } from "./config"
 import { notification } from 'antd'
 
 const login = async(data) =>{
@@ -142,6 +142,11 @@ const deleteUser = async(id) => {
   return rq
 }
 
+const downloadFileAdvertisement = async()=> {
+  const rq = await DOWNLOAD(`advertising_campaignsxlsx/`)
+  return rq.data
+}
+
 
 const endpoints = {
     authenticated: login,
@@ -164,7 +169,8 @@ const endpoints = {
     advertising_campaignsadm:{
       list: listCampaignAdm,
       update: UpdateAdvertisingCampaign,
-      retrieve: retrieveCampaignAdm
+      retrieve: retrieveCampaignAdm,
+      downloadReport: downloadFileAdvertisement    
     },
     advertising_campaignscl:{
       list: listCampaignCl,

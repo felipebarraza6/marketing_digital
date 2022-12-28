@@ -1,5 +1,5 @@
 from .branch_officces import BranchOfficeModelSerializer
 from .job_applications import RetrieveJobApplitacionModelSerializer, JobApplitacionModelSerializer
-from .advertising_compaigns import AdvertisingCampaignModelSerializer
+from .advertising_compaigns import ReportSerializer, ListAdvertisingCampaignModelSerializer, AdvertisingCampaignModelSerializer
 
 

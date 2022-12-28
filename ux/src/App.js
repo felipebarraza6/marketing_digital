@@ -3,11 +3,14 @@ import React, {
     useReducer,
     useEffect } from 'react'
 
+
 import './assets/css/App.css'
 import { appReducer } from './reducers/app_reducer'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import es_ES from 'antd/locale/es_ES';
 
+import { ConfigProvider } from 'antd'
 export const AppContext = createContext()
 
 
@@ -43,8 +46,10 @@ function App() {
   }, [])
 
   return (
-    <AppContext.Provider value={{state, dispatch}}>
-      {state.isAuth ? <Home />:<Login />}
+    <AppContext.Provider value={{state, dispatch}} >
+      <ConfigProvider locale={es_ES} >
+         {state.isAuth ? <Home />:<Login />}
+      </ConfigProvider>
     </AppContext.Provider>
   )
 }

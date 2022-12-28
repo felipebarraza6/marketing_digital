@@ -4,6 +4,7 @@ import { Typography, Row, Col,
           Table, notification, Modal } from 'antd'
 
 import endpoints from '../api/endpoints'
+import {  validate  } from 'rut.js'
 
 
 const Clients = () => {
@@ -12,6 +13,7 @@ const Clients = () => {
   const [formu] = Form.useForm()
 
   const [data, setData] = useState(null)
+  const [rutOk, setRutOk] = useState(false)
   const [update, setUpdate] = useState(0)
   const [selectClient, setSelectClient] = useState(null)
   const [viewForm, setViewForm] = useState(true)
@@ -29,6 +31,7 @@ const Clients = () => {
       form.resetFields()
       setUpdate(update+1)
       notification.success({message:'CLIENTE CREADO CORRECTAMENTE'})
+      setRutOk(false)
     }).catch((x)=> {
       notification.error({message:'NO SE HA PODIDO CREAR EL CLIENTE'})
     })
@@ -66,32 +69,42 @@ const Clients = () => {
         <Col span={6} style={{paddingLeft:'40px'}}>
           {viewForm &&
           <Form onFinish={onFinish} layout='vertical'  form={form}>
-            <Form.Item label='Nombre' name='first_name'>
+            <Form.Item label='Nombre' name='first_name' rules={[{ required: true , message:'Campo obligatorio'}, { min: 5, message:'Asegúrese de que este campo tenga al menos 5 caracteres.' }]}  >
               <Input />
             </Form.Item>
-            <Form.Item label='Apellido' name='last_name'>
+            <Form.Item label='Apellido' name='last_name' rules={[{ required: true , message:'Campo obligatorio'}, { min: 5, message:'Asegúrese de que este campo tenga al menos 5 caracteres.' }]}  >
               <Input />
             </Form.Item>
-            <Form.Item label='Usuario' name='username'>
+            <Form.Item label='Usuario' name='username' rules={[{ required: true , message:'Campo obligatorio'}, { min: 4, message:'Asegúrese de que este campo tenga al menos 4 caracteres.' }]}  >
               <Input />
             </Form.Item>
 
-            <Form.Item label='Email' name='email'>
+            <Form.Item label='Email' name='email' rules={[{ required: true , message:'Campo obligatorio'}, { type: 'email', message:'Debes ingresar un email valido' }]}  >
               <Input />
             </Form.Item>
-            <Form.Item label='Nombre empresa' name='name_enterprise'>
+            <Form.Item label='Nombre empresa' name='name_enterprise' rules={[{ required: true , message:'Campo obligatorio'}]}  >
               <Input />
             </Form.Item>
-            <Form.Item label='Rut' name='dni'>
+            <Form.Item label='Rut' name='dni' rules={[{ required: true , message:'Campo obligatorio'}]} onChange={(e)=>{
+                if(validate(e.target.value) && !rutOk && e.target.value.length >= 8 ){
+                  setRutOk(validate(e.target.value))
+                } else{
+                  setRutOk(false)
+                }
+            }} >
               <Input />
             </Form.Item>
-            <Form.Item label='Contraseña' name='password'>
+            <Form.Item label='Contraseña' name='password' rules={[{ required: true , message:'Campo obligatorio'},{min:8, message:'Asegúrese de que la contraseña  al menos 8 caracteres'}]} >
               <Input />
             </Form.Item>
           <Form.Item>
-            <Button type='primary' htmlType='submit'>CREAR</Button>
-              <Button danger type='primary' style={{marginLeft:'10px'}} onClick={()=>form.resetFields()}>LIMPIAR</Button>
-            
+            <Button type='primary' htmlType='submit' disabled={!rutOk}>CREAR</Button>
+            <Button danger type='primary' style={{marginLeft:'10px'}} onClick={()=>{
+              form.resetFields()
+              setRutOk(false)
+            }}>LIMPIAR</Button>
+{!rutOk && <p style={{marginTop:'10px', color:'red'}}>Debes ingresar un rut valido</p>}
+
           </Form.Item>
           </Form>}
         </Col>

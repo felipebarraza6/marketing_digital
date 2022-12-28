@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Typography, Row, Button,Col, Table, Modal, Statistic, Card,  } from 'antd'
-import { LoadingOutlined, ArrowDownOutlined, LikeFilled, DislikeFilled } from '@ant-design/icons'
+import { FileExcelOutlined, LikeFilled, DislikeFilled } from '@ant-design/icons'
 import { Area, Line } from '@ant-design/plots'
 import endpoints from '../api/endpoints'
 import UpdateAdvertisingCampaign from './UpdateAdvertisingCampaign' 
@@ -28,7 +28,11 @@ const CampaignsAdm = () => {
     <div>
       <Row>
         <Col span={24}>
-          <Table dataSource={data} columns={[
+          <Table title={()=><Button icon={<FileExcelOutlined style={{fontSize:'18px'}}  />} style={{float:'right',backgroundColor:'#135200', borderColor:'#135200', color:'white'}} 
+              onClick={async()=> {
+                const rq = await endpoints.advertising_campaignsadm.downloadReport()
+              }}
+            >Descargar reporte (.xlsx)</Button>} dataSource={data} columns={[
             { dataIndex: 'job_applitacion', title: 'Cliente', render:(x)=>x.owner_client.name_enterprise},
             { dataIndex: 'scope', title: 'Alcance'},
             { dataIndex: 'result', title: 'Costo'},

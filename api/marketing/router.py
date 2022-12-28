@@ -14,6 +14,8 @@ router.register(r'branch_officces', branch_officces.BranchOfficeViewSet, basenam
 router.register(r'job_applications', job_applications.JobApplicationViewSet, basename='job_applications')
 router.register(r'advertising_campaigns', advertising_compaigns.AdvertisingCampaignViewSet, basename='advertising_campaigns')
 
+router.register(r'advertising_campaignsxlsx', advertising_compaigns.AdvertisingCampaignXLS, basename='advertising_campaignsxlsx')
+
 urlpatterns = [
     path('', include(router.urls))
 ]

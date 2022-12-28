@@ -4,12 +4,14 @@ import { Typography, Row, Col,
           Table, notification, Modal } from 'antd'
 
 import endpoints from '../api/endpoints'
+import {  validate  } from 'rut.js'
 
 
 const BranchOfficces = () => {
   
   const [form] = Form.useForm()
   const [formu] = Form.useForm()
+  const [rutOk, setRutOk] = useState(false)
 
   const [data, setData] = useState(null)
   const [update, setUpdate] = useState(0)
@@ -65,18 +67,28 @@ const BranchOfficces = () => {
         <Col span={6} style={{paddingLeft:'40px'}}>
           {viewForm &&
           <Form onFinish={onFinish} layout='vertical'  form={form}>
-            <Form.Item label='Nombre' name='name_branch'>
+            <Form.Item rules={[{ required: true , message:'Campo obligatorio'}]} label='Nombre' name='name_branch'>
               <Input />
             </Form.Item>
-            <Form.Item label='Rut' name='dni_branch'>
-              <Input />
+            <Form.Item rules={[{ required: true , message:'Campo obligatorio'}]} label='Rut' name='dni_branch'>
+              <Input onChange={(e)=>{
+                if(validate(e.target.value) && !rutOk && e.target.value.length >= 8 ){
+                  setRutOk(validate(e.target.value))
+                } else{
+                  setRutOk(false)
+                }
+              }} />
             </Form.Item>
-            <Form.Item label='Giro' name='commercial_business'>
+            <Form.Item rules={[{ required: true , message:'Campo obligatorio'}]} label='Giro' name='commercial_business'>
               <Input.TextArea rows={4} />
             </Form.Item>
             <Form.Item>
-            <Button type='primary' htmlType='submit'>CREAR</Button>
-              <Button danger type='primary' style={{marginLeft:'10px'}} onClick={()=>form.resetFields()}>LIMPIAR</Button>
+              <Button disabled={!rutOk}type='primary' htmlType='submit'>CREAR</Button>
+              <Button  danger type='primary' style={{marginLeft:'10px'}} onClick={()=>{
+                form.resetFields()
+                setRutOk(false)
+              }}>LIMPIAR</Button>
+              {!rutOk && <p style={{marginTop:'10px', color:'red'}}>Debes ingresar un rut valido</p>}
           </Form.Item>
           </Form>}
         </Col>

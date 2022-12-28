@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+import { notification } from 'antd'
+import { CloudDownloadOutlined } from '@ant-design/icons'
 
 const BASE_URL = 'http://localhost:8000'
 
@@ -58,3 +59,33 @@ export const DELETE = async (endpoint) =>{
     return response
 }
 
+export const DOWNLOAD = async(endpoint) => {
+
+    const token = JSON.parse(localStorage.getItem('token')) 
+    const download = {
+      responseType: 'blob',
+      headers: {        
+          Authorization: `Token ${token}`
+      }
+    }
+
+    const request = await INSTANCE.get(endpoint, download).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${new Date()}.xlsx`)
+        document.body.appendChild(link)
+        link.click()
+    })
+    
+
+    
+    notification.open({
+        description: `Archivo descargado exitosamente!`,
+        placement: 'topRight',
+        icon: <CloudDownloadOutlined style={{color:'#69802A'}} />
+
+    })
+
+    return request
+}
