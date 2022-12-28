@@ -92,8 +92,8 @@ const CampaignsCl = () => {
                 <Col span={6} style={{padding:'20px'}}>
                   <Typography.Paragraph>NOTA ADMINISTRADOR: <br/><b>{x.message_admin}</b></Typography.Paragraph>
                   <Typography.Paragraph>TU ÚLTIMO COMENTARIO: <br/><b>{x.message_client}</b></Typography.Paragraph>
-                  <Input.TextArea placeholder='Envía un comentario...' rows={5} onChange={async(x)=>{
-                  const rq = await endpoints.advertising_campaignsadm.update('message_client', x.target.value, x.uuid).then((x)=>{
+                  <Input.TextArea placeholder='Envía un comentario...' rows={5} onChange={async(e)=>{
+                  const rq = await endpoints.advertising_campaignsadm.update('message_client', e.target.value, x.uuid).then((x)=>{
                     setUpdate(update+1)
                   })
                 

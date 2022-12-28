@@ -18,8 +18,8 @@ const CreateJobApplication = () => {
       owner_client: user.id,
       branch_office: user.branch_office_default.id,
       payment: img,
-      start_date: moment(values.start_date).format('YYYY-MM-DD'),
-      end_data: moment(values.end_data).format('YYYY-MM-DD')
+      start_date: moment(new Date(values.start_date)).format('YYYY-MM-DD'),
+      end_data: moment(new Date(values.end_data)).format('YYYY-MM-DD')
     }
     const rq = await endpoints.job_applicationscl.create(values).then((r)=> {
       notification.success({message:'SOLICITUD ENVIADA CORRECTAMENTE'})
@@ -38,10 +38,10 @@ const CreateJobApplication = () => {
           <Input.TextArea rows={3} />
         </Form.Item>
         <Form.Item label='Fecha inicio' name='start_date' rules={[{ required: true , message:'Campo obligatorio'}]} >
-          <DatePicker format={"YYYY-MM-DD"} placeholder='Selecciona una fecha de inicio' style={{width:'100%'}} />
+          <DatePicker  placeholder='Selecciona una fecha de inicio' style={{width:'100%'}} />
         </Form.Item>
         <Form.Item label='Fecha termino' name='end_data' rules={[{ required: true , message:'Campo obligatorio'}]}  >
-          <DatePicker format={"YYYY-MM-DD"} placeholder='Selecciona una fecha de termino' style={{width:'100%'}} />
+          <DatePicker placeholder='Selecciona una fecha de termino' style={{width:'100%'}} />
         </Form.Item>
         <Form.Item label='Presupuesto ($)' name='budget' rules={[{ required: true , message:'Campo obligatorio'}]} >
           <Input placeholder='$ 000.000.000' type='number' />
